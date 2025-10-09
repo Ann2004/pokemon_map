@@ -5,6 +5,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from django.utils.timezone import localtime
 from .models import Pokemon, PokemonEntity
+from django.core.exceptions import ObjectDoesNotExist
 
 
 MOSCOW_CENTER = [55.751244, 37.618423]
@@ -57,7 +58,10 @@ def show_all_pokemons(request):
 
 
 def show_pokemon(request, pokemon_id):
-    requested_pokemon = Pokemon.objects.get(id=pokemon_id)
+    try:
+        requested_pokemon = Pokemon.objects.get(id=pokemon_id)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
     
     pokemon = {
         "pokemon_id": requested_pokemon.id,
