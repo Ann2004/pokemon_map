@@ -1,5 +1,5 @@
 from django.db import models  # noqa F401
-from django.utils.timezone import localtime
+from django.utils.timezone import now
 
 class Pokemon(models.Model):
     title = models.CharField(max_length=200, verbose_name = "название")
@@ -35,8 +35,8 @@ class PokemonEntity(models.Model):
         )
     lat = models.FloatField(verbose_name = "широта")
     lon = models.FloatField(verbose_name = "долгота")
-    appeared_at = models.DateTimeField(default=localtime(), verbose_name = "время появления на карте")
-    disappeared_at = models.DateTimeField(default=localtime(), verbose_name = "время исчезновения на карте")
+    appeared_at = models.DateTimeField(default=now, verbose_name = "время появления на карте")
+    disappeared_at = models.DateTimeField(default=now, verbose_name = "время исчезновения на карте")
     level = models.IntegerField(blank=True, 
                                 default=0,
                                 verbose_name = "уровень"
